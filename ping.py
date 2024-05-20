@@ -17,20 +17,19 @@ def perform_request(address, timeout, results):
 
 def perform_requests(addresses, timeout):
     """
-    Effettua una richiesta a ciascun indirizzo in `addresses`, aspettando per ognuno `timeout` secondi.
-    Viene atteso un tempo `interval` (intervallo di monitoraggio)>`timeout` per garantire che tutte le richieste siano terminate.
+    Effettua una richiesta a ciascun indirizzo in `addresses`, aspettando `timeout` secondi per una risposta.
     Restituisce una mappa da indirizzo alla corrispettiva risposta, in un formato variabile a seconda della presenza di errori.
     """
     results = {} # mappa indirizzo:risposta
     threads=[]
-    # ogni host viene pingato in un thread separato
+    # ogni host viene monitorato in un thread separato
     for address in addresses:
-        thread=threading.Thread(target=perform_request, args=(address,timeout,results))
-        threads.append(thread)
-        thread.start()
-    # attendo la terminazione di tutti i thread
-    for thread in threads:
-        thread.join()
+        t=threading.Thread(target=perform_request, args=(address,timeout,results))
+        threads.append(t)
+        t.start()
+    # attendo la terminazione di tutti i thread (e quindi di tutte le richieste)
+    for t in threads:
+        t.join()
     return results
 
 def show_results(results, timestamp) -> None:
@@ -47,7 +46,7 @@ def show_results(results, timestamp) -> None:
                 print(f"disponibile (rtt: {response.min_rtt}ms)")
             else:
                 print("non disponibile (timeout scaduto)")
-    print("-"*50)
+    print("-"*70)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser() # parser degli argomenti a riga di comandi
