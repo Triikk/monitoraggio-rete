@@ -27,6 +27,7 @@ A questo punto è possibile utilizzare lo script, servendosi anche dell'apposito
 ```
 python ping.py --help
 ```
+Per interromperlo è sufficiente premere CTRL+C.
 
 ## Esempi
 + host in rete locale:
@@ -41,3 +42,8 @@ python ping.py -a wikipedia.org cloudflare.com unibo.it -i 1 -t 0.5
 ```
 python ping.py -a abc1234567.it
 ```
+
+# Considerazioni aggiuntive
+Lo script è stato pensato per supportare un numero relativamente basso di host, in quanto viene creato un thread per ognuno di essi. Per ottenere una maggiore scalabilità, si potrebbero suddividere gli host in batch e assegnare un batch a ciascun thread.
+
+La gestione dei tempi, inoltre, non è precissima (è osservabile anche dall'output dei risultati, che include anche le frazioni di secondo), in quanto la funzione `time.sleep()` dipende anche dallo scheduling di altre attività da parte del sistema operativo. Tuttavia, in quanto solitamente gli intervalli di tempo dei monitoraggi di rete variano da alcune centinaia di millisecondi a diversi secondi se non minuti, l'errore che si commette non è tale da causare grandi problemi.
