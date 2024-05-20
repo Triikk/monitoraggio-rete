@@ -1,6 +1,7 @@
 # Introduzione
 Ho svolto la traccia 3, consistente in un monitoraggio di rete.
 Per realizzarlo, mi sono servito principalmente delle seguenti librerie:
+
 + [argparse](https://docs.python.org/3/library/argparse.html) per la gestione dei parametri da riga di comando
 + [icmplib](https://pypi.org/project/icmplib/) per le richieste ICMP
 + [threading](https://docs.python.org/3/library/threading.html) per la gestione del parallelismo
@@ -9,6 +10,7 @@ Per realizzarlo, mi sono servito principalmente delle seguenti librerie:
 Lo script effettua un monitoraggio concorrente, inviando una singola richiesta per volta ad ogni host attraverso un thread specifico.
 
 Lo script permette di specificare:
+
 + indirizzi (indirizzi IPv4, IPv6, hostname, FQDN)
 + timeout (tempo di attesa massimo per ricevere una risposta)
 + intervallo di monitoraggio (intervallo di tempo )
